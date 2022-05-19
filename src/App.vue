@@ -1,7 +1,12 @@
 <template>
   <div id="app">
-    <AppHeader />
-    <AppSong />
+    <header>
+      <AppHeader />
+    </header>
+
+    <main>
+      <AppSong />
+    </main>
   </div>
 </template>
 
