@@ -1,8 +1,11 @@
 <template>
     <div class="playlist">
         <div v-if="success" class="ms-container pt-4">
+            <div class="row row-cols-1">
+                <AppSearch @searchSelected="songSelected($event)" />
+            </div>
             <div class="row row-cols-6 gap-4">
-                <AppSongCard class="ms-card" v-for="(item, index) in song" :key="index" :songCard="item" />
+                <AppSongCard class="ms-card" v-for="(item, index) in songFiltered" :key="index" :songCard="item" />
             </div>
         </div>
         <div v-else class="container">
@@ -14,6 +17,7 @@
 <script>
 import AppSongCard from "./AppSongCard.vue";
 import AppLoading from "./AppLoading";
+import AppSearch from "./AppSearch.vue";
 import axios from "axios";
 
 export default {
@@ -21,11 +25,13 @@ export default {
     components: {
         AppSongCard,
         AppLoading,
+        AppSearch,
     },
     data() {
         return {
             song: [],
             success: false,
+            genre: "",
         };
     },
     created() {
@@ -36,6 +42,20 @@ export default {
             this.success = resp.data.success;
         });
     },
+
+      computed: {
+        songFiltered() {
+        const filteredArray = this.song.filter((item) => {
+        return item.genre.includes(this.genre);
+        });
+        return filteredArray;
+        },
+    },
+    methods: {
+        songSelected(event) {
+        this.genre = event;
+        },
+    },
 }
 </script>
 
@@ -45,7 +65,7 @@ export default {
 
 .playlist {
     background-color: $m-backcolor;
-    height: calc(100vh - 60px);
+    height: 100vh;
 
     .ms-container {
         width: 60%;
