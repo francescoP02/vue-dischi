@@ -1,7 +1,7 @@
 <template>
     <div class="playlist">
         <div v-if="success" class="ms-container pt-4">
-            <div class="row row-cols-1">
+            <div class="py-4 d-flex justify-content-center">
                 <AppSearch @searchSelected="songSelected($event)" />
                 <AppAuthorSearch @searchAuthorSelected="authorSelected($event)" />
             </div>
@@ -76,7 +76,7 @@ export default {
 
 .playlist {
     background-color: $m-backcolor;
-    height: 100vh;
+    min-height: 100vh;
 
     .ms-container {
         width: 60%;
