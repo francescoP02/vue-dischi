@@ -3,6 +3,7 @@
         <div v-if="success" class="ms-container pt-4">
             <div class="row row-cols-1">
                 <AppSearch @searchSelected="songSelected($event)" />
+                <AppAuthorSearch @searchAuthorSelected="authorSelected($event)" />
             </div>
             <div class="row row-cols-6 gap-4">
                 <AppSongCard class="ms-card" v-for="(item, index) in songFiltered" :key="index" :songCard="item" />
@@ -18,6 +19,7 @@
 import AppSongCard from "./AppSongCard.vue";
 import AppLoading from "./AppLoading";
 import AppSearch from "./AppSearch.vue";
+import AppAuthorSearch from "./AppAuthorSearch.vue";
 import axios from "axios";
 
 export default {
@@ -26,12 +28,14 @@ export default {
         AppSongCard,
         AppLoading,
         AppSearch,
+        AppAuthorSearch,
     },
     data() {
         return {
             song: [],
             success: false,
             genre: "",
+            author: "",
         };
     },
     created() {
@@ -45,15 +49,22 @@ export default {
 
       computed: {
         songFiltered() {
-        const filteredArray = this.song.filter((item) => {
-        return item.genre.includes(this.genre);
+        let filteredArray = this.song.filter((item) => {
+        return item.genre.includes(this.genre) && item.author.includes(this.author);
         });
-        return filteredArray;
+        return filteredArray
         },
+
     },
+
+        
     methods: {
         songSelected(event) {
         this.genre = event;
+        },
+
+        authorSelected(event) {
+        this.author = event;
         },
     },
 }
